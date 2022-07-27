@@ -1,0 +1,106 @@
+body {
+    background-color: rgb(104, 103, 103);
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: navy;
+    margin-left: 20px;
+}
+div.title{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 0;
+    background-color: rgb(33, 108, 194);
+    width: 100%;
+}
+
+div.coffee {
+    padding: 15px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    background-color: rgb(132, 129, 129);
+    float: left;
+    width: 15%;
+    height: 150px;
+    text-align: center;
+}
+
+p.coffee{
+    font-size: 110%;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+div.row {
+    width: 100%;
+    padding: 0px;
+    padding-top: 10px;
+    margin: 0;
+    background-color: rgb(104, 103, 103);
+}
+img{
+    max-width: 100%;
+    max-height: 60%;
+    
+}
+div.confirm{
+    float: left;
+    padding: 5px;
+    margin: 20px;
+    margin-left: 40px;
+    background-color: rgb(132, 129, 129);
+    width: 68%;
+}
+p.confirm{
+    text-align: center;
+    font-size: 130%;
+    text-transform: capitalize;
+}
+div.confirm:hover{
+    background-color: rgb(120, 118, 118);
+}
+div.confirm:active{
+    background-color: rgb(120, 118, 118);
+}
+div.addOrder{
+    float: left;
+    padding: 5px;
+    margin: 20px;
+    margin-left: px;
+    background-color: rgb(132, 129, 129);
+    width: 16.5%;
+}
+p.addOrder{
+    text-align: center;
+    font-size: 130%;
+    text-transform: capitalize;
+}
+div.addOrder:hover{
+    background-color: rgb(120, 118, 118);
+}
+div.addOrder:active{
+    background-color: rgb(120, 118, 118);
+}
+div.warning{
+    background-color: rgb(213, 44, 44);
+    width: 100%;
+    height: 10%;
+    color: white;
+}
+div.orderComplete{
+    background-color: rgb(44, 213, 81);
+    width: 100%;
+    height: 10%;
+    color: white;
+}
+.orderCompleteP{
+    background-color: rgb(44, 213, 81);
+    width: 100%;
+    height: 10%;
+    color: white;
+    display: inline;
+    padding-left: 3px;
+}

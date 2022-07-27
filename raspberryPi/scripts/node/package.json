@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "express": "^4.18.1",
+    "fs": "^0.0.1-security",
+    "js": "^0.1.0",
+    "node-static": "^0.7.11"
+  }
+}
