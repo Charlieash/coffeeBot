@@ -21,7 +21,8 @@
     <br>
     <div class="row">
         <div class="confirm">
-            <p class="confirm" id="demo"> </p>
+            <p class="confirm" id="demo"> <?php writeOrderId() ?></p>
+            
         </div>
         <div class="addOrder">
             <p class="addOrder" id="addToOrder"></p>
@@ -60,5 +61,11 @@ if(isset($_COOKIE["order"])){
     $dom->appendChild($root);
 
 	$dom->save($xml_file_name);
+
+}
+function writeOrderId(){
+    $xml=simplexml_load_file("order.xml");
+    $id = $xml->id + 1;
+    echo("last order Id: ". $id);
 }
 ?>

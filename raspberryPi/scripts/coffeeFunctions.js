@@ -156,7 +156,7 @@ function readXml(xmlFile){
     return(typeValue);
     }
 
-function checkOrder(oldTypeValue){
+function checkOrder(){
     let complete = '';
     let xmlFile = "orderComplete.xml";
     var typeValue = readXml(xmlFile);
@@ -167,14 +167,13 @@ function checkOrder(oldTypeValue){
         let displayOrderComplete = document.createElement('div');
         displayOrderComplete.setAttribute("id", complete);
         displayOrderComplete.setAttribute("class", "orderCompleteP");
-        //displayOrderComplete.setAttribute("class", "orderComplete");
         orderCompleteId.appendChild(displayOrderComplete);
         var displayOrderCompleteId = document.getElementById(complete);
         eval('displayOrderCompleteId.innerHTML='+complete+';');
     }
+    oldTypeValue = typeValue;
     var orderCompletePId = document.getElementById("orderCompleteP");
     orderCompletePId.innerHTML = "Order complete: ";
-
     complete = '';
     setTimeout(checkOrder,1000);
     return(oldTypeValue);

@@ -137,9 +137,19 @@ class hotWater(drink):
     def firstMovement(self,A):
         A.send("20 #")
 
+class test(drink):
+    def __init__(self, coffeeInput="test", id =1):
+        super().__init__(coffeeInput)
+        self.setTimeWeighting(2)
+        self.setOrderWeighting(id)
+    def movement(self,A):
+        self.firstMovement(A)
+    def firstMovement(self,A):
+        A.send("25 #")
+
 
         
-def filterOrder(availableCoffees, availableEspressos, availableWaters, coffees, id):
+def filterOrder(availableCoffees, availableEspressos, availableWaters,availableTest, coffees, id):
     orders = []
     for orderUnfiltered in range(len(coffees)):
 
@@ -152,6 +162,9 @@ def filterOrder(availableCoffees, availableEspressos, availableWaters, coffees, 
         for w in range(len(availableWaters)):
             if(availableWaters[w] in coffees[orderUnfiltered]):
                 orders.append(hotWater(coffees[orderUnfiltered],id))
+        for t in range(len(availableTest)):
+            if(availableTest[t] in coffees[orderUnfiltered]):
+                orders.append(test(coffees[orderUnfiltered],id))
 
         #print(orders[orderUnfiltered].getName())
         #print(orders[orderUnfiltered].getAmount())
@@ -176,13 +189,13 @@ def coffeeBotAlgoritm(orders):
     return(weightings)
 
 #This function adds element to the array as new orders come in
-def addToArray(xml,availableCoffees, availableEspressos,availableWaters, oldId, orders, weightedOrders):
+def addToArray(xml,availableCoffees, availableEspressos,availableWaters,availableTest, oldId, orders, weightedOrders):
     data = openXML(xml)
     order = data[0]
     coffees = order.split(" ")
     id = data[1]
     if(id != oldId):
-        orders.extend(filterOrder(availableCoffees, availableEspressos, availableWaters, coffees, id))
+        orders.extend(filterOrder(availableCoffees, availableEspressos, availableWaters,availableTest, coffees, id))
         weightedOrders=(coffeeBotAlgoritm(orders))
         print(weightedOrders)
         oldId = id
@@ -223,11 +236,12 @@ def multiPinging(Arm):
         else: return(None)
     
 
-def RorL(R, L):
-
+def RorL(R, L, orderState, orderId, orderCompleteXML):
     result = multiPinging(R)
     if (result!=None):
         print("R")
+        if orderState == False:
+            orderCompleted(orderId, orderCompleteXML)
         return(result)
     else:
         result = multiPinging(L)
@@ -248,8 +262,8 @@ def removeFromArray(weightedOrders, orders, A):
                     orderID = orders[order-1].getOrderWeight()
                     del orders[order-1]
                     orderState = checkOrder(orders, weightedOrders, orderID)
-                    if orderState == False:
-                        orderCompleted(orderID)
+                    return(orderState, orderID)
+
 
 
 def checkOrder(orders, weightedOrders, orderID):
@@ -258,26 +272,33 @@ def checkOrder(orders, weightedOrders, orderID):
             return(True)
     return(False)
 
-def orderCompleted(orderID):
+def orderCompleted(orderID, orderCompleteXML):
     root = ET.Element("root")
     doc = ET.SubElement(root, "doc")
     ET.SubElement(doc, "field1").text = orderID
     tree = ET.ElementTree(root)
-    tree.write("orderComplete.xml")
+    tree.write(orderCompleteXML)
 
-def main(xml,availableCoffees, availableEspressos,availableWaters,R,L):
+def main(xml,orderCompleteXML,availableCoffees, availableEspressos,availableWaters,availableTest,R,L):
     oldId = ""
     orders = []
     weightedOrders = []
     decider = None
+    orderState = True
+    orderId = 0
     while True:
-        arrayAndCo = addToArray(xml,availableCoffees, availableEspressos,availableWaters, oldId, orders, weightedOrders)
+        arrayAndCo = addToArray(xml,availableCoffees, availableEspressos,availableWaters,availableTest, oldId, orders, weightedOrders)
         oldId = arrayAndCo[2]
         weightedOrders = arrayAndCo[1]
         orders = arrayAndCo[0]
-        decider = RorL(R,L)
+        decider = RorL(R,L,orderState, orderId,orderCompleteXML)
         if(decider != None):
-            removeFromArray(weightedOrders, orders, decider)
+            removeFromArrayValues = removeFromArray(weightedOrders, orders, decider)
+            try:
+                orderState = removeFromArrayValues[0]
+                orderId = removeFromArrayValues[1]
+            except:
+                orderState = True
         time.sleep(6)
 
 
