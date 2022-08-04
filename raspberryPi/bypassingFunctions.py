@@ -106,6 +106,11 @@ class drink:
         return()
     #error codes in case the user enters an invalid integer for variables 
 
+#-----------------------------------------------------------------------------------------------------------------------------------------
+#Sub-classes of drink
+#-----------------------------------------------------------------------------------------------------------------------------------------
+#Different classes of coffees require different movements but a few are the same 
+#So there are different subclasses to identify the type of coffee/drink 
 class coffee(drink):
     def __init__(self,coffeeInput="americano_x2", id=1):
         super().__init__(coffeeInput, id)
@@ -147,8 +152,13 @@ class test(drink):
     def firstMovement(self,A):
         A.send("25 #")
 
+#-----------------------------------------------------------------------------------------------------------------------------------------
+#Functions 
+#-----------------------------------------------------------------------------------------------------------------------------------------
 
-        
+
+#This function generates an array of objects for the different subclasses of drinks
+#This function takes 6 different inputted variables and outputs one consise list        
 def filterOrder(availableCoffees, availableEspressos, availableWaters,availableTest, coffees, id):
     orders = []
     for orderUnfiltered in range(len(coffees)):
@@ -166,12 +176,16 @@ def filterOrder(availableCoffees, availableEspressos, availableWaters,availableT
             if(availableTest[t] in coffees[orderUnfiltered]):
                 orders.append(test(coffees[orderUnfiltered],id))
 
+        #Printing data of each drink for testing purposes 
+
         #print(orders[orderUnfiltered].getName())
         #print(orders[orderUnfiltered].getAmount())
         #print(orders[orderUnfiltered].getTimeWeight())
         #print(orders[orderUnfiltered].getOrderWeight())
+
     return(orders)
 
+#This function opens the xml files and returns the order id and order contents
 def openXML(xml):
     tree = ET.parse(xml)
     root = tree.getroot()
@@ -179,6 +193,8 @@ def openXML(xml):
     #print(root[0].text)
     return(root.text, root[0].text)
 
+
+#multiplies the order number by the time weighting for the coffee, puts them in an array and sorts it
 def coffeeBotAlgoritm(orders):
     weightings = []
     for order in range(len(orders)):
@@ -201,10 +217,13 @@ def addToArray(xml,availableCoffees, availableEspressos,availableWaters,availabl
         oldId = id
     return(orders, weightedOrders, oldId)
 
+#This function exists to be called by multipinging
 def foo(A):
     result = A.ping()
     return(result)
 
+#This class is a subclass of the thread class created by the threading library 
+#It adds the ability to return a value from the threaded function foo
 class ThreadWithReturnValue(Thread):
     def __init__(self, group=None, target=None, name=None,
                  args=(), kwargs={}, Verbose=None):
@@ -219,7 +238,8 @@ class ThreadWithReturnValue(Thread):
         Thread.join(self, *args)
         return self._return
 
-
+#multiPinging is the function that pings the robot and starts a timer at the same time
+#if the ping doesn't return a value within a second it assumes the arm is busy
 def multiPinging(Arm):
     #if __name__ == '__main__':
         p =ThreadWithReturnValue(target = foo, name = "Foo", args = (Arm,))
@@ -235,7 +255,7 @@ def multiPinging(Arm):
             return(Arm)
         else: return(None)
     
-
+#This calls multipinging for R and L to determine whether R or L is not currently moving
 def RorL(R, L, orderState, orderId, orderCompleteXML):
     result = multiPinging(R)
     if (result!=None):
@@ -250,7 +270,8 @@ def RorL(R, L, orderState, orderId, orderCompleteXML):
         else:print("None")
         return(result)
 
-        
+#Removes orders from the list when the order for the robot to move has been sent
+#It also removes the coffees from the list if there are no more copies of it        
 def removeFromArray(weightedOrders, orders, A):
     if len(weightedOrders) > 0:
         currentCoffee = weightedOrders.pop(0)
@@ -265,13 +286,14 @@ def removeFromArray(weightedOrders, orders, A):
                     return(orderState, orderID)
 
 
-
+#Checks whether there are any remaining instances of the same coffee
 def checkOrder(orders, weightedOrders, orderID):
     for order in range(len(orders)):
         if orders[order-1].getOrderWeight() == orderID:
             return(True)
     return(False)
 
+#Sends the order ID to an xml file when the order has been completed 
 def orderCompleted(orderID, orderCompleteXML):
     root = ET.Element("root")
     doc = ET.SubElement(root, "doc")
@@ -279,6 +301,7 @@ def orderCompleted(orderID, orderCompleteXML):
     tree = ET.ElementTree(root)
     tree.write(orderCompleteXML)
 
+#This is what is run by bypassingRobotStudio and repeats the correct order of functions without end
 def main(xml,orderCompleteXML,availableCoffees, availableEspressos,availableWaters,availableTest,R,L):
     oldId = ""
     orders = []
