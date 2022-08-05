@@ -1,0 +1,18 @@
+MODULE coffeeMovements
+    CONST robtarget Home:=[[-9.578368507,182.609892723,198.627808149],[0.066010726,0.842420918,-0.111214912,0.523068661],[0,0,0,4],[101.964427132,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget aboveCup:=[[139.482206355,37.42942113,209.540756599],[0.499999964,-0.499999948,0.5000003,-0.499999787],[0,-1,2,4],[127.645430982,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pickUpCup:=[[139.482265358,37.429893188,99.898770257],[0.499999803,-0.499999837,0.500000645,-0.499999715],[-1,0,2,4],[127.645436385,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget beforeCoffeeMachine:=[[49.384722129,150.722170524,142.976133362],[0.499999375,-0.499999987,0.500001587,-0.499999051],[0,0,1,4],[127.645430343,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget inCoffeeMachine:=[[49.384716852,326.117671797,142.976337657],[0.499999579,-0.499999932,0.500001255,-0.499999234],[0,0,1,4],[127.645433436,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget beforeHome:=[[-81.393511455,326.118394408,142.976813737],[0.49999943,-0.499999858,0.500001671,-0.499999041],[0,0,1,4],[127.645433115,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    PROC cupToMachine()
+        MoveL Home,v100,fine,tool0\WObj:=wobj0;
+        MoveL aboveCup,v100,fine,tool0\WObj:=wobj0;
+        MoveL pickUpCup,v100,fine,tool0\WObj:=wobj0;
+        MoveL aboveCup,v100,fine,tool0\WObj:=wobj0;
+        MoveL beforeCoffeeMachine,v100,fine,tool0\WObj:=wobj0;
+        MoveL inCoffeeMachine,v100,fine,tool0\WObj:=wobj0;
+        MoveL beforeHome,v100,fine,tool0\WObj:=wobj0;
+        MoveL Home,v100,fine,tool0\WObj:=wobj0;
+    ENDPROC
+ENDMODULE
