@@ -160,8 +160,6 @@ class test(drink):
 #-----------------------------------------------------------------------------------------------------------------------------------------
 #Functions 
 #-----------------------------------------------------------------------------------------------------------------------------------------
-
-
 #This function generates an array of objects for the different subclasses of drinks
 #This function takes 6 different inputted variables and outputs one consise list        
 def filterOrder(availableCoffees, availableEspressos, availableWaters,availableTest, coffees, id):
