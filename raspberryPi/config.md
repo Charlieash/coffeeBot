@@ -15,7 +15,7 @@ write below script <br>
 > xset s off <br>
 > xset -dpms <br>
 > xset s noblank <br>
-> /usr/bin/chromium-browser --kiosk http://google.com <br>
+> /usr/bin/chromium-browser --kiosk http://127.0.0.1:8000/firstDraft.php <br>
 > unclutter -idle 0.1 -root <br>
 
 Save file <br>
