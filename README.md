@@ -1,5 +1,6 @@
 # coffeeBot 
-
+## NSERP robotic barista project
+This project exists to interface a raspberry pi to a ABB Yumi and a coffee machine with the intention to creating a coffee making robot <br>
 ## Setup steps <br>
 1. Upload raspberryPi to raspberry Pi
 2. Upload rapid files to Yumi
