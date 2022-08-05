@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import time
 from threading import Thread
+# import smbus // needed for raspberry pi
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 #The drink object defines properties of every type of drink produced by coffeeBot
@@ -118,6 +119,7 @@ class coffee(drink):
         self.setOrderWeighting(id)
     def movement(self,A):
         self.firstMovement(A)
+        createCoffee("coffee")
     def firstMovement(self,A):
         A.send("20 #")
         
@@ -129,6 +131,7 @@ class espresso(drink):
         self.setOrderWeighting(id)
     def movement(self,A):
         self.firstMovement(A)
+        createCoffee("espresso")
     def firstMovement(self,A):
         A.send("20 #")
 
@@ -139,6 +142,7 @@ class hotWater(drink):
         self.setOrderWeighting(id)
     def movement(self,A):
         self.firstMovement(A)
+        createCoffee("hotWater")
     def firstMovement(self,A):
         A.send("20 #")
 
@@ -149,14 +153,13 @@ class test(drink):
         self.setOrderWeighting(id)
     def movement(self,A):
         self.firstMovement(A)
+        createCoffee("test")
     def firstMovement(self,A):
         A.send("25 #")
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 #Functions 
 #-----------------------------------------------------------------------------------------------------------------------------------------
-
-
 #This function generates an array of objects for the different subclasses of drinks
 #This function takes 6 different inputted variables and outputs one consise list        
 def filterOrder(availableCoffees, availableEspressos, availableWaters,availableTest, coffees, id):
@@ -324,7 +327,12 @@ def main(xml,orderCompleteXML,availableCoffees, availableEspressos,availableWate
                 orderState = True
         time.sleep(6)
 
+#Future functions (not functional until coffee machine arrives)
+def sendI2C(value):
+    bus = smbus.SMBus(0)
+    address = 0x70
+    bus.write_byte_data(address, 0, value)
+    return -1
 
-        
-
-
+def createCoffee(coffeeSettings):
+    sendI2C(coffeeSettings)
