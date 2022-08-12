@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 import time
 from threading import Thread
-# import smbus // needed for raspberry pi
+import smbus # needed for raspberry pi
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 #The drink object defines properties of every type of drink produced by coffeeBot
@@ -119,7 +119,7 @@ class coffee(drink):
         self.setOrderWeighting(id)
     def movement(self,A):
         self.firstMovement(A)
-        createCoffee("coffee")
+        #createCoffee("coffee")
     def firstMovement(self,A):
         A.send("20 #")
         
@@ -131,7 +131,7 @@ class espresso(drink):
         self.setOrderWeighting(id)
     def movement(self,A):
         self.firstMovement(A)
-        createCoffee("espresso")
+        #createCoffee("espresso")
     def firstMovement(self,A):
         A.send("20 #")
 
@@ -142,7 +142,7 @@ class hotWater(drink):
         self.setOrderWeighting(id)
     def movement(self,A):
         self.firstMovement(A)
-        createCoffee("hotWater")
+        #createCoffee("hotWater")
     def firstMovement(self,A):
         A.send("20 #")
 
@@ -153,7 +153,7 @@ class test(drink):
         self.setOrderWeighting(id)
     def movement(self,A):
         self.firstMovement(A)
-        createCoffee("test")
+        #createCoffee("test")
     def firstMovement(self,A):
         A.send("25 #")
 
@@ -335,4 +335,11 @@ def sendI2C(value):
     return -1
 
 def createCoffee(coffeeSettings):
-    sendI2C(coffeeSettings)
+    if coffeeSettings == "coffee":
+        sendI2C(0x01)
+    elif coffeeSettings == "espresso":
+        sendI2C(0x02)
+    elif coffeeSettings == "hotWater":
+        sendI2C(0x03)
+    elif coffeeSettings == "test":
+        sendI2C(0x04)
